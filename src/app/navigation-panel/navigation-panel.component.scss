@@ -1,0 +1,257 @@
+@import 'src/styles/vars';
+
+.panel {
+    margin-top: 55px;
+    padding: 0;
+}
+
+.courses {
+    margin-bottom: 70px;
+
+    h5 {
+        font-weight: 700;
+        text-transform: uppercase;
+
+        padding-left: 50px;
+        margin-bottom: 25px;
+
+        color: $dark-grey;
+    }
+
+    &-list {
+
+        list-style: none;
+        
+        padding-left: 0;
+
+        &__item {
+            position: relative;
+
+            a {
+                display: block;
+
+                font-size: 16px;
+                font-weight: 700;
+
+                width: 100%;
+
+                padding-top: 15px;
+                padding-bottom: 15px;
+                padding-left: 50px;    
+
+                &:hover:before {
+                    content: '';
+                    
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+    
+                    width: 5px;
+                    height: 100%;
+    
+                    background-color: $blue;
+                }
+    
+                &:hover:after {
+                    content: '';
+                    
+                    position: absolute;
+                    left: 5px;
+                    top: 0;
+    
+                    width: 100%;
+                    height: 100%;
+    
+                    background-color: $blue;
+                    opacity: 0.3;
+                }
+            }
+
+            img {
+                max-width: 22px;
+                max-height: 22px;
+
+                margin-right: 25px;
+            }
+        }
+    }
+}
+
+.tags {
+    margin-bottom: 200px;
+
+    h5 {
+        font-weight: 700;
+        text-transform: uppercase;
+
+        padding-left: 50px;
+        margin-bottom: 25px;
+
+        color: $dark-grey;
+    }
+
+    &__item {
+        &-label {
+            position: relative;
+            
+            font-size: 16px;
+            font-weight: 700;
+
+            width: 100%;
+
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-left: 100px;   
+            margin: 0; 
+        }
+
+        &-checkbox {
+           display: none;
+        }
+
+        &-circle {
+            position: absolute;
+            left: 55px;
+            top: 31%;
+
+            display: inline-block;
+
+            width: 18px;
+            height: 18px;
+
+            border-radius: 100%;
+            border: 2px solid;
+        }
+
+        &-checkbox:not(:checked) + &-circle {
+            background-color: transparent !important;
+        }
+    }
+
+    &__add {
+        position: relative;
+
+        &-button {
+            font-weight: 700;
+            text-align: left;
+
+            width: 100%;
+
+            margin-top: 15px;
+            padding: 0;
+            padding-left: 99px;
+
+            color: $grey;
+
+            background: transparent;
+            border: none;
+
+            cursor: pointer;
+        }
+
+        & > svg {
+            position: absolute;
+
+            top: 16px;
+            left: 54px;
+
+            max-width: 18px;
+            max-height: 18px;
+
+            cursor: pointer;
+        }
+
+        &:hover {
+            button {
+                color: $dark-grey;
+            }  
+              
+            path {
+                fill: $dark-grey;
+            }
+        
+        }
+
+        &-input {
+            font-weight: 700;
+            text-align: left;
+
+            width: 100%;
+
+            margin-top: 0;
+            padding: 0;
+        
+            color: $dark-grey;
+
+            background: transparent;
+            border: none;
+
+            outline: none;
+
+            &::placeholder {
+                color: $dark-grey;
+            }
+
+            &-label {
+                position: relative;
+                
+                font-size: 16px;
+                font-weight: 700;
+    
+                width: 100%;
+    
+                padding-top: 15px;
+                padding-bottom: 15px;
+                padding-left: 100px;   
+                margin: 0; 
+            }
+    
+            &-circle {
+                position: absolute;
+                left: 55px;
+                top: 31%;
+    
+                display: inline-block;
+    
+                width: 18px;
+                height: 18px;
+    
+                border-radius: 100%;
+                border: 2px solid;
+            }
+        }
+    }
+}
+
+.dark-mode {
+    position: absolute;
+    bottom: 40px;
+
+    a {
+        display: block;
+
+        font-size: 16px;
+        font-weight: 700;
+
+        width: 100%;
+
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 50px;    
+
+        &:hover { 
+            color: $blue;
+
+            path {
+                fill: $blue;
+            }
+        }
+    }
+
+    svg {
+        max-width: 22px;
+        max-height: 22px;
+
+        margin-right: 25px;
+    }
+}

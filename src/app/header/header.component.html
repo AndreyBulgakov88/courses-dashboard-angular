@@ -1,0 +1,14 @@
+<div class="row container">
+  <div class="col-md-3 logo">
+    <img class="logo__image" src="assets/images/logo.svg" alt="logo">
+  </div>
+  <div class="col-md-7 search">
+    <input class="search__input" type="text" placeholder="Search...">
+  </div>
+  <div class="col-md-2 controls">
+    <div class="controls__notify" (click)="onClickNotify()">
+      <div class="controls__notify-have" *ngIf="haveNotify"></div>
+    </div> 
+    <button type="button" class="controls__login" (click)="onClickLogin()">Login</button>
+  </div>
+</div>

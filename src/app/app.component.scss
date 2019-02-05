@@ -1,0 +1,17 @@
+@import 'src/styles/vars';
+
+.container {
+    position: relative; /* needed for footer positioning*/
+    height: auto !important; /* real browsers */
+    min-height: 93%; /* real browsers */
+}
+
+.nav-panel {
+    padding: 0;
+    
+    border-right: 1px solid $grey;
+}
+
+.courses {
+    background-color: $light-grey-blue;
+}
