@@ -1,27 +1,41 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '@app/services/auth.service';
 
 @Component({
   selector: 'app-login-modal',
   template: `
     <div class="modal-header">
-      <h4 class="modal-title">Hi there!</h4>
+      <h4 class="modal-title">Login</h4>
       <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <p>Hello, {{name}}!</p>
+      <label class="modal-body__email-label" for="email">Email</label>
+      <br>
+      <input type="text" class="modal-body__email-input" #email placeholder="Email">
+      <br>
+      <br>
+      <label class="modal-body__password-label" for="password">Password</label>
+      <br>
+      <input type="password" class="modal-body__password-input" #password placeholder="Password">
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+      <button type="button" class="modal-footer__login" (click)="onClickLogin(email.value, password.value)">Sign in</button>
     </div>
-  `
+  `,
+  styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent {
   @Input() name;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal, private authService: AuthService) {}
+
+  onClickLogin(email, password) {
+   this.authService.loginUser(email, password);
+   this.activeModal.close();
+  }
 }
 
 
@@ -33,10 +47,16 @@ export class LoginModalComponent {
 export class HeaderComponent implements OnInit {
 
   haveNotify = false;
+  isAuthenticated = false;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.isAuthenticated()
+    .subscribe(
+      currentUser => {
+        this.isAuthenticated = currentUser === null ? false : true;
+      });
   }
 
   onClickNotify() {
@@ -46,5 +66,9 @@ export class HeaderComponent implements OnInit {
   onClickLogin() {
     const modalRef = this.modalService.open(LoginModalComponent);
     modalRef.componentInstance.name = 'World';
+  }
+
+  onClickLogout() {
+    this.authService.logoutUser();
   }
 }

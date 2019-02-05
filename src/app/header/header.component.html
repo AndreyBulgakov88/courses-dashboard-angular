@@ -2,13 +2,23 @@
   <div class="col-md-3 logo">
     <img class="logo__image" src="assets/images/logo.svg" alt="logo">
   </div>
-  <div class="col-md-7 search">
-    <input class="search__input" type="text" placeholder="Search...">
+  <div class="col-md-7 search-user d-flex">
+    <input class="search-user__input" type="text" placeholder="Search...">
+    <span class="search-user__user" *ngIf="isAuthenticated">{{ authService.getCurrentUser().email }}</span>
   </div>
   <div class="col-md-2 controls">
     <div class="controls__notify" (click)="onClickNotify()">
       <div class="controls__notify-have" *ngIf="haveNotify"></div>
     </div> 
-    <button type="button" class="controls__login" (click)="onClickLogin()">Login</button>
+    <button *ngIf="!isAuthenticated" type="button" class="controls__login" (click)="onClickLogin()">Login</button>
+    
+    <div *ngIf="isAuthenticated" ngbDropdown class="d-inline-block">
+        <button class="controls__dropdown" id="profileDropdown" ngbDropdownToggle>Profile</button>
+        <div ngbDropdownMenu class="controls__dropdown-container" aria-labelledby="profileDropdown">
+          <button type="button" class="controls__settings" (click)="onClickSettings()">Settings</button>
+          <hr>
+          <button type="button" class="controls__logout" (click)="onClickLogout()">Logout</button>
+        </div>
+      </div>
   </div>
 </div>

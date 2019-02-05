@@ -7,6 +7,7 @@ import {
   query
 } from '@angular/animations';
 import { CoursesService } from '@app/services/courses.service';
+import { AuthService } from '@app/services/auth.service';
 
 @Component({
   selector: 'app-navigation-panel',
@@ -29,6 +30,7 @@ import { CoursesService } from '@app/services/courses.service';
 export class NavigationPanelComponent implements OnInit {
 
   addingTag = false;
+  isAuthenticated = false;
   tags = [];
   palette = [];
 
@@ -37,9 +39,14 @@ export class NavigationPanelComponent implements OnInit {
     this.addInputElRef = elRef;
   }
 
-  constructor(private coursesService: CoursesService) { }
+  constructor(private coursesService: CoursesService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.isAuthenticated()
+    .subscribe(
+      currentUser => {
+        this.isAuthenticated = currentUser === null ? false : true;
+      });
   }
 
   toggleAddTag() {

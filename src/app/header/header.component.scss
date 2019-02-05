@@ -15,7 +15,9 @@
     }
 }
 
-.search {
+.search-user {
+    display: flex;
+
     padding: 0;
     
     border-bottom: 1px solid $grey;
@@ -28,6 +30,12 @@
 
         border: none;
         outline: none;
+    }
+
+    &__user {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-right: 4px;
     }
 }
 
@@ -63,7 +71,7 @@
         }
     }
 
-    &__login {
+    &__login, &__dropdown {
 
         padding: 5px 12px;
 
@@ -82,5 +90,29 @@
         }
 
         outline: none;
+    }
+
+    &__dropdown-container {
+        padding: 0;
+    }
+
+    &__settings, &__logout {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        padding: 5px 0;
+
+        border: none;
+        background: transparent;
+
+        &:hover {
+            background-color: $light-grey;
+        }
+    }
+
+    hr {
+        margin: 0;
     }
 }
