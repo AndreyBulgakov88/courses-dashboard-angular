@@ -12,10 +12,10 @@ export class CoursesListComponent implements OnInit {
   constructor(private route: ActivatedRoute, private coursesService: CoursesService) { }
 
   ngOnInit() {
-    this.route.params
+    this.route.url
     .subscribe(
-      params => {
-        this.coursesService.setActiveContent(params['type']);
+      url => {
+        this.coursesService.setActiveContent(url[0]['path']);
       });
   }
 }

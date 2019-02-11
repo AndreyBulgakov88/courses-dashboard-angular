@@ -6,22 +6,24 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent, LoginModalComponent, ProfileModalComponent } from './header/header.component';
+import { HeaderComponent, LoginModalComponent } from './header/header.component';
 import { NavigationPanelComponent } from './navigation-panel/navigation-panel.component';
-import { CoursesListComponent } from './courses/courses-list/courses-list.component';
+import { CoursesListComponent } from './courses-list/courses-list.component';
+import { ProfileComponent } from './profile/profile.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginModalComponent,
-    ProfileModalComponent,
     NavigationPanelComponent,
-    CoursesListComponent
+    CoursesListComponent,
+    ProfileComponent,
+    PageNotFoundComponent
   ],
   entryComponents: [
     LoginModalComponent,
-    ProfileModalComponent
   ],
   imports: [
     BrowserModule,

@@ -40,7 +40,7 @@
                 padding-left: 50px;    
             }
 
-            img {
+            svg {
                 max-width: 22px;
                 max-height: 22px;
 
@@ -50,6 +50,10 @@
             &:hover:not(&-active) {
                 a {
                     color: $blue;
+
+                    path {
+                        fill: $blue;
+                    }
                 }
             }
 

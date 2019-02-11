@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '@app/services/auth.service';
 import { CoursesService } from '@app/services/courses.service';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-modal',
@@ -40,32 +41,6 @@ export class LoginModalComponent {
 
 
 @Component({
-  selector: 'app-profile-modal',
-  template: `
-    <div class="modal-header">
-      <h4 class="modal-title">Profile settings</h4>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-    </div>
-  `,
-  styleUrls: ['./modal.component.scss']
-})
-export class ProfileModalComponent implements OnInit {
-
-  myCategories = null;
-
-  constructor(public activeModal: NgbActiveModal) {
-  }
-
-  ngOnInit() {
-  }
-}
-
-
-@Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
@@ -75,7 +50,7 @@ export class HeaderComponent implements OnInit {
   haveNotify = false;
   isAuthenticated = false;
 
-  constructor(private modalService: NgbModal, private authService: AuthService) { }
+  constructor(private modalService: NgbModal, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.authService.isAuthenticated()
@@ -94,7 +69,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickSettings() {
-    this.modalService.open(ProfileModalComponent);
+    this.router.navigateByUrl('/profile');
   }
 
   onClickLogout() {
