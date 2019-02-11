@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CoursesService } from '@app/services/courses.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursesListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private coursesService: CoursesService) { }
 
   ngOnInit() {
+    this.route.params
+    .subscribe(
+      params => {
+        this.coursesService.setActiveContent(params['type']);
+      });
   }
-
 }

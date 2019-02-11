@@ -2,41 +2,45 @@
   <nav *ngIf="isAuthenticated" class="courses">
     <h5>Courses</h5>
     <ul class="courses-list">
-      <li class="courses-list__item">
-        <a href="#">
+      <li [ngClass]="{'courses-list__item': true, 'courses-list__item-active': (coursesService.getActiveContent() | async) === 'my-courses'}">
+        <a [routerLink]="['/courses/my-courses']">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiBjbGFzcz0iIj48Zz48Zz4KCTxwYXRoIGQ9Ik00NjQsNjR2NDE2SDgwYy0xNy42NzIsMC0zMi0xNC4zMTItMzItMzJzMTQuMzI4LTMyLDMyLTMyaDM1MlYwSDgwQzQ0LjY1NiwwLDE2LDI4LjY1NiwxNiw2NHYzODQgICBjMCwzNS4zNDQsMjguNjU2LDY0LDY0LDY0aDQxNlY2NEg0NjR6IiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBjbGFzcz0iYWN0aXZlLXBhdGgiIHN0eWxlPSJmaWxsOiNBNUE1QTUiIGRhdGEtb2xkX2NvbG9yPSIjMDAwMDAwIj48L3BhdGg+CjwvZz48L2c+IDwvc3ZnPg==" />
             My Courses
         </a>
       </li>
-      <li class="courses-list__item">
-        <a href="#">
+      <li [ngClass]="{'courses-list__item': true, 'courses-list__item-active': (coursesService.getActiveContent() | async) === 'browse-courses'}">
+        <a [routerLink]="['/courses/browse-courses']">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDc5NS4wMzUgNzk1LjAzNSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNzk1LjAzNSA3OTUuMDM1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgY2xhc3M9IiI+PGc+PGc+Cgk8cGF0aCBkPSJNMCw2NDcuNTg5YzAsNDkuODkyLDQwLjU4OCw5MC40NzksOTAuNDc5LDkwLjQ3OWgyMC4xMDhoNTUyLjA3OWg0MC4yMTFoNDEuODk1di00MC4yMTJoLTQxLjg5NVY1OTcuMzIyaDQxLjg5NXYtMTcuNTk0ICAgaDIwLjEwNGgzMC4xNnYtNDAuMjEyaC0zMC4xNlY0MzguOTg5aDMwLjE2di00MC4yMTFoLTMwLjE2aC0yLjUxM3YtMTMuMzk1di0yMC4xMDd2LTAuODYzbC00OS42NDctOTIuOTkyaDUyLjE2MXYtNTQuMDczICAgTDYzMy42NjUsNTYuOTY4SDE3MC43MzhMNTEuMzU2LDI0NS4wNzVjLTIwLjQxNywxNi42MTItMzMuNzYsNDEuNjI1LTMzLjc2LDY5LjkzNWMwLDQ5LjU4MSw0MC4xMTQsODkuODksODkuNTkzLDkwLjM4MyAgIGMtMzMuMjkxLDEzLjM3Mi01Ni45MjIsNDUuODQ3LTU2LjkyMiw4My44NjRjMCwyNy42MDQsMTIuNjg4LDUyLjA0NiwzMi4yNDIsNjguNjU2QzM2LjM5NSw1NjIuMDIyLDAsNjAwLjQyNiwwLDY0Ny41ODl6ICAgIE01Ny44MDYsMzE1LjAxYzAtMTguNzUsMTAuNDI5LTM0Ljk0NiwyNS42ODYtNDMuNTg2aDU5OS4yNzh2OTMuODU0SDEwOC4wNzRDODAuMzU5LDM2NS4yNzYsNTcuODA2LDM0Mi43Miw1Ny44MDYsMzE1LjAxeiAgICBNMTQwLjc0Nyw0MzguOTkxaDIwLjEwNmg1NjMuODA5djEwMC41MjZIMTYwLjg1M2gtMjAuMTA2Yy0yNy43MTUsMC01MC4yNjgtMjIuNTQxLTUwLjI2OC01MC4yNiAgIEM5MC40OCw0NjEuNTMsMTEzLjAzMiw0MzguOTkxLDE0MC43NDcsNDM4Ljk5MXogTTkwLjQ4LDU5Ny4zMjJoMjAuMTA4aDU1Mi4wNzl2MTAwLjUzM2gtNTUyLjA4SDkwLjQ3OSAgIGMtMjcuNzEzLDAtNTAuMjY1LTIyLjU0MS01MC4yNjUtNTAuMjY3QzQwLjIxNCw2MTkuODYyLDYyLjc2Nyw1OTcuMzIyLDkwLjQ4LDU5Ny4zMjJ6IiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBjbGFzcz0iYWN0aXZlLXBhdGgiIHN0eWxlPSJmaWxsOiNBNUE1QTUiIGRhdGEtb2xkX2NvbG9yPSIjNTE1MTUxIj48L3BhdGg+CjwvZz48L2c+IDwvc3ZnPg==" />
           Browse Courses
         </a>
       </li>
     </ul>
   </nav>
-  <div class="tags">
-    <h5>Tags</h5>
-    <div class="tags__item" *ngFor="let tag of coursesService.fetchTags() | async">
-      <label class="tags__item-label">         
-        <input class="tags__item-checkbox" type="checkbox" id="tag{{tag.id}}">
-        {{tag.name}}
-        <label class="tags__item-circle" for="tag{{tag.id}}" [ngStyle]="{'borderColor': coursesService.getTagColorById(tag.colorId), 'backgroundColor': coursesService.getTagColorById(tag.colorId)}"></label>
+  <div class="categories">
+    <h5>Categories</h5>
+    <div class="categories__item" *ngFor="let category of coursesService.fetchCategories() | async">
+      <label class="categories__item-label">         
+        <input class="categories__item-checkbox" type="checkbox" id="category{{category.id}}">
+        {{category.name}}
+        <label class="categories__item-circle" for="category{{category.id}}" [ngStyle]="{'borderColor': coursesService.getCategoryColorById(category.colorId), 'backgroundColor': coursesService.getCategoryColorById(category.colorId)}"></label>
       </label>       
+      <!-- <div *ngIf="isAuthenticated" class="categories__fav-item-container">
+        <input class="categories__fav-item-checkbox" type="checkbox" id="fav{{category.id}}" (click)="onClickFavourite(category)">
+        <label class="categories__fav-item-heart" for="fav{{category.id}}"><fa name="heart" [ngStyle]="{'color': category.fav ? 'red' : '#11111380'}"></fa></label>
+      </div> -->
     </div>  
-    <div *ngIf="isAuthenticated" [@addTag]="addingTag ? 'invisible' : 'visible'">
-      <div *ngIf="!addingTag" class="tags__add" (click)="toggleAddTag()">
+    <div *ngIf="isAdmin" [@addCategory]="addingCategory ? 'invisible' : 'visible'">
+      <div *ngIf="!addingCategory" class="categories__add" (click)="toggleAddCategory()">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 491.86 491.86" style="enable-background:new 0 0 491.86 491.86;" xml:space="preserve" width="512px" height="512px">
           <g><path d="M465.167,211.614H280.245V26.691c0-8.424-11.439-26.69-34.316-26.69s-34.316,18.267-34.316,26.69v184.924H26.69    C18.267,211.614,0,223.053,0,245.929s18.267,34.316,26.69,34.316h184.924v184.924c0,8.422,11.438,26.69,34.316,26.69    s34.316-18.268,34.316-26.69V280.245H465.17c8.422,0,26.69-11.438,26.69-34.316S473.59,211.614,465.167,211.614z" data-original="#000000" class="active-path" fill="#D0D0D0"/></g>
         </svg>
-        <button class="tags__add-button">
+        <button class="categories__add-button">
           Add
         </button>
       </div>
-      <label *ngIf="addingTag" class="tags__add-input-label">         
-        <input class="tags__add-input" #addInput placeholder="Enter tag name..." (blur)="toggleAddTag()" (keydown)="onAddTag($event, coursesService.getNextTagColorId())">
-        <label class="tags__add-input-circle" for="addInput" [ngStyle]="{'borderColor': coursesService.getNextTagColor()}"></label>
+      <label *ngIf="addingCategory" class="categories__add-input-label">         
+        <input class="categories__add-input" #addInput placeholder="Enter category name..." (blur)="toggleAddCategory()" (keydown)="onKeydownAddCategory($event, coursesService.getNextCategoryColorId())">
+        <label class="categories__add-input-circle" for="addInput" [ngStyle]="{'borderColor': coursesService.getNextCategoryColor()}"></label>
       </label>       
     </div>  
 

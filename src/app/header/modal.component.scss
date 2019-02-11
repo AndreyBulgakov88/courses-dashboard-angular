@@ -1,5 +1,9 @@
 @import 'src/styles/vars';
 
+.close {
+    outline: none;
+}
+
 .modal-body {
     &__email-input, &__password-input {
         width: 100%;
@@ -22,6 +26,20 @@
     &:active {
         color:#C8C8C8;    
     }
+}
 
-    outline: none;
+.my-categories-container__list {
+    list-style: none;
+}
+
+.my-categories-container__item {
+    &-remove {
+        margin-left: 10px;
+
+        opacity: 0.6;
+        
+        &:hover {
+            opacity: 1;
+        }
+    }
 }

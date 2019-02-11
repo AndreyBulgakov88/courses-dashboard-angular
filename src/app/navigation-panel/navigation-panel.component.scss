@@ -1,7 +1,7 @@
 @import 'src/styles/vars';
 
 .panel {
-    margin-top: 55px;
+    margin-top: 62px;
     padding: 0;
 }
 
@@ -38,8 +38,23 @@
                 padding-top: 15px;
                 padding-bottom: 15px;
                 padding-left: 50px;    
+            }
 
-                &:hover:before {
+            img {
+                max-width: 22px;
+                max-height: 22px;
+
+                margin-right: 25px;
+            }
+
+            &:hover:not(&-active) {
+                a {
+                    color: $blue;
+                }
+            }
+
+            &-active {
+                &:before {
                     content: '';
                     
                     position: absolute;
@@ -52,7 +67,7 @@
                     background-color: $blue;
                 }
     
-                &:hover:after {
+                &:after {
                     content: '';
                     
                     position: absolute;
@@ -66,18 +81,11 @@
                     opacity: 0.3;
                 }
             }
-
-            img {
-                max-width: 22px;
-                max-height: 22px;
-
-                margin-right: 25px;
-            }
         }
     }
 }
 
-.tags {
+.categories {
     margin-bottom: 200px;
 
     h5 {
@@ -91,6 +99,8 @@
     }
 
     &__item {
+        position: relative;
+
         &-label {
             position: relative;
             
@@ -104,6 +114,10 @@
             padding-left: 100px;   
             margin: 0; 
         }
+
+        // &-label:hover + .categories__fav-item-container {
+        //     display: block;
+        // }
 
         &-checkbox {
            display: none;
@@ -120,13 +134,43 @@
             height: 18px;
 
             border-radius: 100%;
-            border: 2px solid;
+            border:2px solid;
         }
 
         &-checkbox:not(:checked) + &-circle {
             background-color: transparent !important;
         }
+
+        &-checkbox:not(:checked):hover + &-circle {
+           border-width: 3px;
+        }
     }
+
+    // &__fav-item {
+    //     &-checkbox {
+    //         display: none;
+    //     }
+
+    //     &-container {
+    //         display: none;
+
+    //         position: absolute;
+    //         top: 28%;
+    //         left: 9%;
+
+    //         &:hover {
+    //             display: block;
+    //         }
+    //     }
+
+    //     &-heart {
+    //         opacity: 0.5;
+
+    //         &:hover {
+    //             opacity: 1;      
+    //         }
+    //     }
+    // }
 
     &__add {
         position: relative;

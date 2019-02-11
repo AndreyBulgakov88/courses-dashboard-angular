@@ -8,13 +8,14 @@ import {
 } from '@angular/animations';
 import { CoursesService } from '@app/services/courses.service';
 import { AuthService } from '@app/services/auth.service';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-panel',
   templateUrl: './navigation-panel.component.html',
   styleUrls: ['./navigation-panel.component.scss'],
   animations: [
-    trigger('addTag', [
+    trigger('addCategory', [
       transition('* => *', [
         query(':enter', [
           style({ opacity: 0, position: 'absolute' }),
@@ -29,40 +30,46 @@ import { AuthService } from '@app/services/auth.service';
 })
 export class NavigationPanelComponent implements OnInit {
 
-  addingTag = false;
+  addingCategory = false;
+  activeContent = null;
   isAuthenticated = false;
-  tags = [];
-  palette = [];
+  isAdmin = false;
 
   private addInputElRef: ElementRef;
   @ViewChild('addInput') set addInput(elRef: ElementRef) {
     this.addInputElRef = elRef;
   }
 
-  constructor(private coursesService: CoursesService, private authService: AuthService) { }
+  constructor(private coursesService: CoursesService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.isAuthenticated()
     .subscribe(
       currentUser => {
         this.isAuthenticated = currentUser === null ? false : true;
+        this.isAdmin = currentUser === null ? false : currentUser.role === 'admin';
       });
   }
 
-  toggleAddTag() {
-    this.addingTag = !this.addingTag;
+  // onClickFavourite(category) {
+  //   this.coursesService.toggleCategoryFavourite(category);
+  // }
 
-    if (this.addingTag) {
+ toggleAddCategory() {
+    this.addingCategory = !this.addingCategory;
+
+    if (this.addingCategory) {
       setTimeout(() => { this.addInputElRef.nativeElement.focus(); });
     }
   }
 
-  onAddTag(e, colorId) {
+  onKeydownAddCategory(e, colorId) {
     if (e.keyCode === 13) {
-      this.coursesService.addTag(e.target.value, colorId);
-      this.addingTag = false;
+      this.coursesService.addCategory(e.target.value, colorId);
+      this.addingCategory = false;
     } else if (e.keyCode === 27) {
-      this.addingTag = false;
+      this.addingCategory = false;
     }
   }
 }
