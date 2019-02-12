@@ -18,7 +18,7 @@ export class CoursesService {
 
   private categoriesFilter = [];
 
-  private courses = new BehaviorSubject([
+  private courses = [
     {id: 0, name: 'Hackdesign', description: 'An easy to follow design course for people who do amazing things. ', categoryId: 0},
     {id: 1, name: 'ecorp trainings', description: 'Take a world-class online course.', categoryId: 0},
     {id: 2, name: 'Springboard', description: 'If you want a career in UX/UI design this course is perfect for you. ', categoryId: 0},
@@ -31,14 +31,14 @@ export class CoursesService {
     {id: 9, name: 'MASTERCLASS', description: 'Take online classes from the world’s best. ', categoryId: 2},
     {id: 10, name: 'Future Learn', description: 'Future learn named best user experience at the UXUK Awards. ', categoryId: 2},
     {id: 11, name: 'THE BIG KNOW', description: 'Learn from the brands you love. ', categoryId: 2},
-  ]);
+  ];
 
   private filteredCourses = new BehaviorSubject([]);
 
   private activeContent = new BehaviorSubject(null);
 
   constructor() {
-    this.filteredCourses.next(this.courses.value);
+    this.filteredCourses.next(this.courses);
   }
 
   setActiveContent(type) {
@@ -70,9 +70,9 @@ export class CoursesService {
 
     let modifiedArrayCourses = [];
     if (this.categoriesFilter.length === 0) {
-      modifiedArrayCourses = this.courses.value;
+      modifiedArrayCourses = this.courses;
     } else {
-      modifiedArrayCourses = this.courses.value.filter(course => this.categoriesFilter.indexOf(course.categoryId) !== -1);
+      modifiedArrayCourses = this.courses.filter(course => this.categoriesFilter.indexOf(course.categoryId) !== -1);
     }
 
     this.filteredCourses.next([...modifiedArrayCourses]);
