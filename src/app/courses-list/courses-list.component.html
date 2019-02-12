@@ -1,13 +1,23 @@
 <section class="courses">
-    <div class="row">
+    <div class="row courses__header-container">
         <h2 class="courses__header">{{ (coursesService.getActiveContent() | async) === 'browse-courses' ? 'Browse courses' : 'My courses' }}</h2>
-        <div ngbDropdown class="d-inline-block">
-            <button class="courses__dropdown" id="profileDropdown" ngbDropdownToggle>Filter</button>
-            <div ngbDropdownMenu class="controls__dropdown-container" aria-labelledby="profileDropdown">
-                <button type="button" class="controls__settings" (click)="onClickSettings()">Settings</button>
+        <div ngbDropdown class="d-inline-block" *ngIf="(authService.isAuthenticated() | async)">
+            <button class="courses__dropdown" id="profileDropdown" ngbDropdownToggle>{{filter.header}}</button>
+            <div ngbDropdownMenu class="courses__dropdown-container" aria-labelledby="profileDropdown">
+                <button type="button" class="courses__dropdown-all" (click)="onClickFliterAllCourses()">All courses</button>
                 <hr>
-                <button type="button" class="controls__logout" (click)="onClickLogout()">Logout</button>
+                <button type="button" class="courses__dropdown-favourite" (click)="onClickFilterFavouriteCategories()">Favourite categories</button>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="card text-center" style="width: 18rem; margin: 10px;" *ngFor="let course of courses">
+            <h5 class="card-header">{{course.name}}</h5>
+            <div class="card-body">
+                <p class="card-text">{{course.description}}</p>
+                <a href="#" class="btn btn-primary">Add course</a>
+            </div>
+        </div>
+    </div>    
+    <ngb-pagination class="courses__pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="coursesService.fetchCourses().value.length" [directionLinks]="false" (pageChange)="pageChange()" ></ngb-pagination>
 </section>

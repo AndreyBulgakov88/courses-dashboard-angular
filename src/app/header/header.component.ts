@@ -73,6 +73,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickLogout() {
+    this.router.navigateByUrl('/browse-courses');
     this.authService.logoutUser();
   }
 }

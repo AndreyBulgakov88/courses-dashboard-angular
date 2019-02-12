@@ -2,10 +2,76 @@
 
 .courses {
 
-    padding-top: 50px;
-    padding-left: 50px;
+    padding: 50px;
 
     &__header {
         font-weight: 700;
+
+        &-container {
+            display: flex;
+            justify-content: space-between; 
+            
+            margin: 0;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__dropdown {
+        width: 210px;
+
+        padding: 5px 12px;
+
+        color: white;
+        background-color: $light-blue;
+
+        border-radius: 5px;
+        border: none;
+
+        &-container {
+            padding: 0;
+
+            hr {
+                margin: 0;
+            }
+        }
+
+        outline: none;
+
+        &:active {
+            background-color: $blue;    
+        }
+
+        &-all, &-favourite {
+            display: block;
+    
+            width: 208px;
+            height: 100%;
+    
+            padding: 5px 0;
+    
+            border: none;
+            background: transparent;
+    
+            &:hover {
+                background-color: $light-grey;
+            }
+        }
+    }
+
+    &__pagination {
+        position: absolute;
+        bottom: 10px;
+    }
+}
+
+.card {
+    &-title {
+        font-weight: 700;
+    }
+
+    &-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }

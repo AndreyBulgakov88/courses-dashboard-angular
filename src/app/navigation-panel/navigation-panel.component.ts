@@ -8,7 +8,6 @@ import {
 } from '@angular/animations';
 import { CoursesService } from '@app/services/courses.service';
 import { AuthService } from '@app/services/auth.service';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-panel',

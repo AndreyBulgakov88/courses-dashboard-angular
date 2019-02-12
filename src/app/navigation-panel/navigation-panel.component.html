@@ -21,32 +21,34 @@
     </ul>
   </nav>
   <div class="categories">
-    <h5>Categories</h5>
-    <div class="categories__item" *ngFor="let category of coursesService.fetchCategories() | async">
-      <label class="categories__item-label">         
-        <input class="categories__item-checkbox" type="checkbox" id="category{{category.id}}">
-        {{category.name}}
-        <label class="categories__item-circle" for="category{{category.id}}" [ngStyle]="{'borderColor': coursesService.getCategoryColorById(category.colorId), 'backgroundColor': coursesService.getCategoryColorById(category.colorId)}"></label>
-      </label>       
-      <!-- <div *ngIf="isAuthenticated" class="categories__fav-item-container">
-        <input class="categories__fav-item-checkbox" type="checkbox" id="fav{{category.id}}" (click)="onClickFavourite(category)">
-        <label class="categories__fav-item-heart" for="fav{{category.id}}"><fa name="heart" [ngStyle]="{'color': category.fav ? 'red' : '#11111380'}"></fa></label>
-      </div> -->
-    </div>  
-    <div *ngIf="isAdmin" [@addCategory]="addingCategory ? 'invisible' : 'visible'">
-      <div *ngIf="!addingCategory" class="categories__add" (click)="toggleAddCategory()">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 491.86 491.86" style="enable-background:new 0 0 491.86 491.86;" xml:space="preserve" width="512px" height="512px">
-          <g><path d="M465.167,211.614H280.245V26.691c0-8.424-11.439-26.69-34.316-26.69s-34.316,18.267-34.316,26.69v184.924H26.69    C18.267,211.614,0,223.053,0,245.929s18.267,34.316,26.69,34.316h184.924v184.924c0,8.422,11.438,26.69,34.316,26.69    s34.316-18.268,34.316-26.69V280.245H465.17c8.422,0,26.69-11.438,26.69-34.316S473.59,211.614,465.167,211.614z" data-original="#000000" class="active-path" fill="#D0D0D0"/></g>
-        </svg>
-        <button class="categories__add-button">
-          Add
-        </button>
-      </div>
-      <label *ngIf="addingCategory" class="categories__add-input-label">         
-        <input class="categories__add-input" #addInput placeholder="Enter category name..." (blur)="toggleAddCategory()" (keydown)="onKeydownAddCategory($event, coursesService.getNextCategoryColorId())">
-        <label class="categories__add-input-circle" for="addInput" [ngStyle]="{'borderColor': coursesService.getNextCategoryColor()}"></label>
-      </label>       
-    </div>  
+    <div class="categories-container" *ngIf="(coursesService.getActiveContent() | async) === 'browse-courses' || (coursesService.getActiveContent() | async) === 'my-courses'">
+      <h5>Categories</h5>
+      <div class="categories__item" *ngFor="let category of coursesService.fetchCategories() | async">
+        <label class="categories__item-label">         
+          <input class="categories__item-checkbox" type="checkbox" id="category{{category.id}}">
+          {{category.name}}
+          <label class="categories__item-circle" for="category{{category.id}}" [ngStyle]="{'borderColor': coursesService.getCategoryColorById(category.colorId), 'backgroundColor': coursesService.getCategoryColorById(category.colorId)}"></label>
+        </label>       
+        <!-- <div *ngIf="isAuthenticated" class="categories__fav-item-container">
+          <input class="categories__fav-item-checkbox" type="checkbox" id="fav{{category.id}}" (click)="onClickFavourite(category)">
+          <label class="categories__fav-item-heart" for="fav{{category.id}}"><fa name="heart" [ngStyle]="{'color': category.fav ? 'red' : '#11111380'}"></fa></label>
+        </div> -->
+      </div>  
+      <div *ngIf="isAdmin" [@addCategory]="addingCategory ? 'invisible' : 'visible'">
+        <div *ngIf="!addingCategory" class="categories__add" (click)="toggleAddCategory()">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 491.86 491.86" style="enable-background:new 0 0 491.86 491.86;" xml:space="preserve" width="512px" height="512px">
+            <g><path d="M465.167,211.614H280.245V26.691c0-8.424-11.439-26.69-34.316-26.69s-34.316,18.267-34.316,26.69v184.924H26.69    C18.267,211.614,0,223.053,0,245.929s18.267,34.316,26.69,34.316h184.924v184.924c0,8.422,11.438,26.69,34.316,26.69    s34.316-18.268,34.316-26.69V280.245H465.17c8.422,0,26.69-11.438,26.69-34.316S473.59,211.614,465.167,211.614z" data-original="#000000" class="active-path" fill="#D0D0D0"/></g>
+          </svg>
+          <button class="categories__add-button">
+            Add
+          </button>
+        </div>
+        <label *ngIf="addingCategory" class="categories__add-input-label">         
+          <input class="categories__add-input" #addInput placeholder="Enter category name..." (blur)="toggleAddCategory()" (keydown)="onKeydownAddCategory($event, coursesService.getNextCategoryColorId())">
+          <label class="categories__add-input-circle" for="addInput" [ngStyle]="{'borderColor': coursesService.getNextCategoryColor()}"></label>
+        </label>       
+      </div>  
+    </div>
 
     <div class="dark-mode">
       <a href="#">

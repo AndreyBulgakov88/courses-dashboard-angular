@@ -64,6 +64,10 @@ export class CoursesService {
     return this.courses;
   }
 
+  fetchCoursesPage(page, pageSize) {
+    return this.courses.value.slice((page - 1) * pageSize, page * pageSize);
+  }
+
   getCategoryColorById(id) {
     return this.palette[id];
   }
