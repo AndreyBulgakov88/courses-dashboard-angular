@@ -58,20 +58,48 @@
         }
     }
 
-    &__pagination {
-        position: absolute;
-        bottom: 10px;
+    &__add {
+        padding: 5px 25px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &__edit {
+        margin-right: auto;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 }
 
 .card {
-    &-title {
+    &-header {
         font-weight: 700;
+    }
+
+    &-text {
+        margin-bottom: 0;
+    }
+
+    &__category {
+        font-style: italic;
     }
 
     &-body {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    &-footer {
+        padding: 0;
+    }
+
+    hr {
+        width: 100%;
+
+        margin: 15px 0;
     }
 }

@@ -55,6 +55,10 @@ export class NavigationPanelComponent implements OnInit {
   //   this.coursesService.toggleCategoryFavourite(category);
   // }
 
+  onChangeFilterCategory(e, id) {
+    this.coursesService.toggleFilterCategories(e.target.checked, id);
+  }
+
  toggleAddCategory() {
     this.addingCategory = !this.addingCategory;
 

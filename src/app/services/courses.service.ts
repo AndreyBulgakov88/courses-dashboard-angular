@@ -16,6 +16,8 @@ export class CoursesService {
     {id: 2, name: 'Architecture', colorId: 2}
   ]);
 
+  private categoriesFilter = [];
+
   private courses = new BehaviorSubject([
     {id: 0, name: 'Hackdesign', description: 'An easy to follow design course for people who do amazing things. ', categoryId: 0},
     {id: 1, name: 'ecorp trainings', description: 'Take a world-class online course.', categoryId: 0},
@@ -31,9 +33,13 @@ export class CoursesService {
     {id: 11, name: 'THE BIG KNOW', description: 'Learn from the brands you love. ', categoryId: 2},
   ]);
 
+  private filteredCourses = new BehaviorSubject([]);
+
   private activeContent = new BehaviorSubject(null);
 
-  constructor() { }
+  constructor() {
+    this.filteredCourses.next(this.courses.value);
+  }
 
   setActiveContent(type) {
     this.activeContent.next(type);
@@ -52,6 +58,26 @@ export class CoursesService {
     return this.categories;
   }
 
+  toggleFilterCategories(adding, id) {
+    if (adding) {
+      this.categoriesFilter = [...this.categoriesFilter, id];
+    } else {
+      const modifiedArrayCategories = this.categoriesFilter;
+      modifiedArrayCategories.splice(this.categoriesFilter.indexOf(id), 1);
+
+      this.categoriesFilter = [...modifiedArrayCategories];
+    }
+
+    let modifiedArrayCourses = [];
+    if (this.categoriesFilter.length === 0) {
+      modifiedArrayCourses = this.courses.value;
+    } else {
+      modifiedArrayCourses = this.courses.value.filter(course => this.categoriesFilter.indexOf(course.categoryId) !== -1);
+    }
+
+    this.filteredCourses.next([...modifiedArrayCourses]);
+  }
+
   // toggleCategoryFavourite(category) {
   //   const categoryIndex = this.categories.value.indexOf(category);
   //   const categoriesCopy = this.categories.value.slice();
@@ -61,11 +87,15 @@ export class CoursesService {
   // }
 
   fetchCourses() {
-    return this.courses;
+    return this.filteredCourses;
   }
 
   fetchCoursesPage(page, pageSize) {
-    return this.courses.value.slice((page - 1) * pageSize, page * pageSize);
+    return this.filteredCourses.value.slice((page - 1) * pageSize, page * pageSize);
+  }
+
+  getCategoryById(id) {
+    return this.categories.value.find(element => element.id === id).name;
   }
 
   getCategoryColorById(id) {

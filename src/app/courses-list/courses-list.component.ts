@@ -14,10 +14,10 @@ export class CoursesListComponent implements OnInit {
   pageSize = 9;
   filter = {name: 'all', header: 'All courses'};
   courses = [];
+  isAdmin = false;
+  isAuthenticated = false;
 
-  constructor(private route: ActivatedRoute, private coursesService: CoursesService, private authService: AuthService) {
-    this.courses = this.coursesService.fetchCoursesPage(this.page, this.pageSize);
-  }
+  constructor(private route: ActivatedRoute, private coursesService: CoursesService, private authService: AuthService) {}
 
   ngOnInit() {
     this.route.url
@@ -25,6 +25,18 @@ export class CoursesListComponent implements OnInit {
       url => {
         this.coursesService.setActiveContent(url[0]['path']);
       });
+
+    this.authService.isAuthenticated()
+    .subscribe(
+      currentUser => {
+        this.isAuthenticated = currentUser === null ? false : true;
+        this.isAdmin = currentUser === null ? false : currentUser.role === 'admin';
+      });
+
+      this.coursesService.fetchCourses()
+      .subscribe(
+        () => this.courses = this.coursesService.fetchCoursesPage(this.page, this.pageSize)
+      );
   }
 
   onClickFliterAllCourses() {

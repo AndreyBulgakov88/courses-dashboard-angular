@@ -25,7 +25,7 @@
       <h5>Categories</h5>
       <div class="categories__item" *ngFor="let category of coursesService.fetchCategories() | async">
         <label class="categories__item-label">         
-          <input class="categories__item-checkbox" type="checkbox" id="category{{category.id}}">
+          <input class="categories__item-checkbox" type="checkbox" id="category{{category.id}}" (change)="onChangeFilterCategory($event, category.id)">
           {{category.name}}
           <label class="categories__item-circle" for="category{{category.id}}" [ngStyle]="{'borderColor': coursesService.getCategoryColorById(category.colorId), 'backgroundColor': coursesService.getCategoryColorById(category.colorId)}"></label>
         </label>       
