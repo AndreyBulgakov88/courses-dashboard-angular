@@ -6,13 +6,13 @@
             <div ngbDropdownMenu class="courses__dropdown-container" aria-labelledby="profileDropdown">
                 <button type="button" class="courses__dropdown-all" (click)="onClickFliterAllCourses()">All courses</button>
                 <hr>
-                <button type="button" class="courses__dropdown-favourite" (click)="onClickFilterFavouriteCategories()">Favourite categories</button>
+                <button type="button" class="courses__dropdown-favourite" (click)="onClickFilterFavouriteCourses()">Favourite courses</button>
             </div>
         </div>
     </div>
-    <ngb-pagination class="courses__pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="coursesService.fetchCourses().value.length" [directionLinks]="false" (pageChange)="pageChange()" ></ngb-pagination>
+    <ngb-pagination class="courses__pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="(coursesService.fetchCourses().value | filterBy: headerFilter).length" [directionLinks]="false" (pageChange)="pageChange()" ></ngb-pagination>
     <div class="row">
-        <div class="card text-center" style="width: 18rem; margin: 10px;" *ngFor="let course of courses">
+        <div class="card text-center" style="width: 18rem; margin: 10px;" *ngFor="let course of courses | filterBy: headerFilter">
             <h5 class="card-header">{{course.name}}</h5>
             <div class="card-body">
                 <p class="card-text">{{course.description}}</p>

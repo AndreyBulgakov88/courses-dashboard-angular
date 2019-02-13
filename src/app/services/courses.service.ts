@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -36,6 +36,8 @@ export class CoursesService {
   private filteredCourses = new BehaviorSubject([]);
 
   private activeContent = new BehaviorSubject(null);
+
+  headerFilter: EventEmitter<any> = new EventEmitter();
 
   constructor() {
     this.filteredCourses.next(this.courses);

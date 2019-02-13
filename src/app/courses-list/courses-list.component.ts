@@ -12,6 +12,7 @@ export class CoursesListComponent implements OnInit {
 
   page = 1;
   pageSize = 9;
+  headerFilter = '';
   filter = {name: 'all', header: 'All courses'};
   courses = [];
   isAdmin = false;
@@ -33,18 +34,23 @@ export class CoursesListComponent implements OnInit {
         this.isAdmin = currentUser === null ? false : currentUser.role === 'admin';
       });
 
-      this.coursesService.fetchCourses()
-      .subscribe(
-        () => this.courses = this.coursesService.fetchCoursesPage(this.page, this.pageSize)
-      );
+    this.coursesService.fetchCourses()
+    .subscribe(
+      () => this.courses = this.coursesService.fetchCoursesPage(this.page, this.pageSize)
+    );
+
+    this.coursesService.headerFilter
+    .subscribe(
+      headerFilter => this.headerFilter = headerFilter
+    );
   }
 
   onClickFliterAllCourses() {
     this.filter = {name: 'all', header: 'All courses'};
   }
 
-  onClickFilterFavouriteCategories() {
-    this.filter = {name: 'favourites', header: 'Favourite categories'};
+  onClickFilterFavouriteCourses() {
+    this.filter = {name: 'favourites', header: 'Favourite courses'};
   }
 
   pageChange() {

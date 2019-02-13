@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '@app/services/auth.service';
 import { CoursesService } from '@app/services/courses.service';
@@ -50,7 +50,10 @@ export class HeaderComponent implements OnInit {
   haveNotify = false;
   isAuthenticated = false;
 
-  constructor(private modalService: NgbModal, private authService: AuthService, private router: Router) { }
+  constructor(private modalService: NgbModal,
+              private authService: AuthService,
+              private coursesService: CoursesService,
+              private router: Router) { }
 
   ngOnInit() {
     this.authService.isAuthenticated()
@@ -75,5 +78,10 @@ export class HeaderComponent implements OnInit {
   onClickLogout() {
     this.router.navigateByUrl('/browse-courses');
     this.authService.logoutUser();
+  }
+
+  onChangeHeaderFilter(e) {
+    const headerFilter = { $or: [{name: e.target.value}, {description: e.target.value}] };
+    this.coursesService.headerFilter.emit(headerFilter);
   }
 }

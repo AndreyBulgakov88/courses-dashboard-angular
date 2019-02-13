@@ -3,7 +3,7 @@
     <img class="logo__image" src="assets/images/logo.svg" alt="logo">
   </div>
   <div class="col-md-7 search-user d-flex">
-    <input class="search-user__input" type="text" placeholder="Search...">
+    <input class="search-user__input" type="text" placeholder="Search..." (input)="onChangeHeaderFilter($event)">
     <span class="search-user__user" *ngIf="isAuthenticated">{{ authService.getCurrentUser().email }}</span>
   </div>
   <div class="col-md-2 controls">
