@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses-list',
-  templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.scss']
+  templateUrl: './user-courses-list.component.html',
+  styleUrls: ['./user-courses-list.component.scss']
 })
-export class CoursesListComponent implements OnInit, OnDestroy {
+export class UserCoursesListComponent implements OnInit, OnDestroy {
 
   page = 1;
   pageSize = 9;
@@ -70,10 +70,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   pageChange() {
     this.courses = this.coursesService.fetchCoursesPage(this.activeContent, this.page, this.pageSize);
-  }
-
-  onClickAddCourse(id) {
-    this.coursesService.addUserCourse(id);
   }
 
   onClickRemoveCourse(id) {

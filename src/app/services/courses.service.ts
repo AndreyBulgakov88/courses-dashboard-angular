@@ -1,10 +1,14 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
+
+  isAuthenticated = false;
+
   private palette = ['#001f3f', '#39CCCC', '#01FF70', '#FF4136',
                      '#B10DC9', '#DDDDDD', '#7FDBFF', '#2ECC40',
                      '#FF851B', '#F012BE', '#AAAAAA', '#0074D9',
@@ -34,13 +38,21 @@ export class CoursesService {
   ];
 
   private filteredCourses = new BehaviorSubject([]);
+  private userCourses = new BehaviorSubject([]);
+  private filteredUserCourses = new BehaviorSubject([]);
 
   private activeContent = new BehaviorSubject(null);
 
   headerFilter: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.filteredCourses.next(this.courses);
+
+    this.authService.isAuthenticated()
+    .subscribe(
+      currentUser => {
+        this.isAuthenticated = currentUser === null ? false : true;
+      });
   }
 
   setActiveContent(type) {
@@ -78,6 +90,15 @@ export class CoursesService {
     }
 
     this.filteredCourses.next([...modifiedArrayCourses]);
+
+    let modifiedArrayUserCourses = [];
+    if (this.categoriesFilter.length === 0) {
+      modifiedArrayUserCourses = this.userCourses.value;
+    } else {
+      modifiedArrayUserCourses = this.userCourses.value.filter(course => this.categoriesFilter.indexOf(course.categoryId) !== -1);
+    }
+
+    this.filteredUserCourses.next([...modifiedArrayUserCourses]);
   }
 
   // toggleCategoryFavourite(category) {
@@ -88,12 +109,68 @@ export class CoursesService {
   //   this.categories.next(categoriesCopy);
   // }
 
-  fetchCourses() {
-    return this.filteredCourses;
+  fetchCourses(activeContent) {
+    if (activeContent === 'browse-courses') {
+      if (this.isAuthenticated) {
+        this.mergeFilteredAndUserCourses();
+      }
+
+      return this.filteredCourses;
+
+    } else {
+      return this.filteredUserCourses;
+    }
   }
 
-  fetchCoursesPage(page, pageSize) {
-    return this.filteredCourses.value.slice((page - 1) * pageSize, page * pageSize);
+  fetchCoursesPage(activeContent, page, pageSize) {
+    if (activeContent === 'browse-courses') {
+      return this.filteredCourses.value.slice((page - 1) * pageSize, page * pageSize);
+    } else {
+      return this.filteredUserCourses.value.slice((page - 1) * pageSize, page * pageSize);
+    }
+  }
+
+  mergeFilteredAndUserCourses() {
+    const modifiedFilteredCourses = this.filteredCourses.value;
+    modifiedFilteredCourses.map(
+      element => {
+        if (this.userCourses.value.indexOf(element) !== -1) {
+          element.userCourse = true;
+        } else {
+          element.userCourse = false;
+        }
+      }
+    );
+
+    this.filteredCourses.next([...modifiedFilteredCourses]);
+  }
+
+  addUserCourse(id) {
+    const modifiedUserCourses = this.userCourses.value;
+    const addedCourse = this.courses.find(element => element.id === id);
+
+    modifiedUserCourses.push(addedCourse);
+    modifiedUserCourses.sort((a, b) => (a.id - b.id));
+
+    this.userCourses.next([...modifiedUserCourses]);
+  }
+
+  removeUserCourse(id) {
+    // original array
+    const modifiedUserCourses = this.userCourses.value;
+    let removedCourse = modifiedUserCourses.find(element => element.id === id);
+
+    modifiedUserCourses.splice(modifiedUserCourses.indexOf(removedCourse), 1);
+
+    this.userCourses.next([...modifiedUserCourses]);
+
+    // filtered courses
+    const modifiedFilteredUserCourses = this.filteredUserCourses.value;
+    removedCourse = modifiedFilteredUserCourses.find(element => element.id === id);
+
+    modifiedFilteredUserCourses.splice(modifiedFilteredUserCourses.indexOf(removedCourse), 1);
+
+    this.filteredUserCourses.next([...modifiedFilteredUserCourses]);
   }
 
   getCategoryById(id) {

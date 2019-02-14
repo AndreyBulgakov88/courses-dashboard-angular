@@ -1,6 +1,6 @@
 <section class="courses">
     <div class="row courses__header-container">
-        <h2 class="courses__header">{{ (coursesService.getActiveContent() | async) === 'browse-courses' ? 'Browse courses' : 'My courses' }}</h2>
+        <h2 class="courses__header">Browse courses</h2>
         <div ngbDropdown class="d-inline-block" *ngIf="(authService.isAuthenticated() | async)">
             <button class="courses__dropdown" id="profileDropdown" ngbDropdownToggle>{{filter.header}}</button>
             <div ngbDropdownMenu class="courses__dropdown-container" aria-labelledby="profileDropdown">
@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <ngb-pagination class="courses__pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="(coursesService.fetchCourses().value | filterBy: headerFilter).length" [directionLinks]="false" (pageChange)="pageChange()" ></ngb-pagination>
+    <ngb-pagination class="courses__pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="(coursesService.fetchCourses(activeContent).value | filterBy: headerFilter).length" [directionLinks]="false" (pageChange)="pageChange()" ></ngb-pagination>
     <div class="row">
         <div class="card text-center" style="width: 18rem; margin: 10px;" *ngFor="let course of courses | filterBy: headerFilter">
             <h5 class="card-header">{{course.name}}</h5>
@@ -20,7 +20,9 @@
                 <p class="card-text card__category">{{coursesService.getCategoryById(course.categoryId)}}</p>
                 <hr>
                 <div class="row">
-                    <button *ngIf="isAuthenticated" class="btn btn-primary courses__add">Add course</button>
+                    <button *ngIf="isAuthenticated && !course.userCourse" class="btn btn-primary courses__add" (click)="onClickAddCourse(course.id)">Add course</button>
+                    <button *ngIf="isAuthenticated && course.userCourse" class="btn btn-primary courses__remove" (click)="onClickRemoveCourse(course.id)">Remove course</button>
+                    
                     <button *ngIf="isAdmin" class="btn btn-primary courses__edit">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="512px" height="512px" viewBox="0 0 528.899 528.899" style="enable-background:new 0 0 528.899 528.899;" xml:space="preserve" class=""><g><g>
                             <path d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981   c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611   C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069   L27.473,390.597L0.3,512.69z" data-original="#000000" class="active-path" data-old_color="#ffffff" fill="#ffffff"/>

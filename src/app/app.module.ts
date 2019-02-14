@@ -10,8 +10,9 @@ import { AppComponent } from './app.component';
 import { HeaderComponent, LoginModalComponent } from './header/header.component';
 import { NavigationPanelComponent } from './navigation-panel/navigation-panel.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './account/profile/profile.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserCoursesListComponent } from './account/user-courses-list/user-courses-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     NavigationPanelComponent,
     CoursesListComponent,
     ProfileComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserCoursesListComponent
   ],
   entryComponents: [
     LoginModalComponent,

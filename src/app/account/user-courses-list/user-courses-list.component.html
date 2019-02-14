@@ -1,0 +1,20 @@
+<section class="courses">
+  <div class="row courses__header-container">
+      <h2 class="courses__header">My courses</h2>
+  </div>
+  <ngb-pagination class="courses__pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="(coursesService.fetchCourses(activeContent).value | filterBy: headerFilter).length" [directionLinks]="false" (pageChange)="pageChange()" ></ngb-pagination>
+  <div class="row">
+      <div class="card text-center" style="width: 18rem; margin: 10px;" *ngFor="let course of courses | filterBy: headerFilter">
+          <h5 class="card-header">{{course.name}}</h5>
+          <div class="card-body">
+              <p class="card-text">{{course.description}}</p>
+              <hr>
+              <p class="card-text card__category">{{coursesService.getCategoryById(course.categoryId)}}</p>
+              <hr>
+              <div class="row">
+                  <button *ngIf="isAuthenticated" class="btn btn-primary courses__remove" (click)="onClickRemoveCourse(course.id)">Remove course</button>
+              </div>
+          </div>
+      </div>
+  </div>    
+</section>
