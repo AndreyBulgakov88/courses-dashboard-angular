@@ -15,12 +15,10 @@ export class CoursesService {
                      '#3D9970', '#FFDC00', '#85144b', '#111111'];
 
   private categories = new BehaviorSubject([
-    {id: 0, name: 'UI/UX', colorId: 0},
-    {id: 1, name: 'Industrial Design', colorId: 1},
-    {id: 2, name: 'Architecture', colorId: 2}
+    {name: 'UI/UX', colorId: 0, checked: false},
+    {name: 'Industrial Design', colorId: 1, checked: false},
+    {name: 'Architecture', colorId: 2, checked: false}
   ]);
-
-  private categoriesFilter = [];
 
   private courses = [
     {id: 0, name: 'Hackdesign', description: 'An easy to follow design course for people who do amazing things. ', categoryId: 0},
@@ -46,8 +44,6 @@ export class CoursesService {
   headerFilter: EventEmitter<any> = new EventEmitter();
 
   constructor(private authService: AuthService) {
-    this.filteredCourses.next(this.courses);
-
     this.authService.isAuthenticated()
     .subscribe(
       currentUser => {
@@ -57,6 +53,13 @@ export class CoursesService {
 
   setActiveContent(type) {
     this.activeContent.next(type);
+    this.resetFilters();
+
+    if (this.activeContent.value === 'browse-courses') {
+      this.filteredCourses.next(this.courses);
+    } else if (this.activeContent.value === 'my-courses') {
+      this.filteredUserCourses.next(this.userCourses.value);
+    }
   }
 
   getActiveContent() {
@@ -64,7 +67,7 @@ export class CoursesService {
   }
 
   addCategory(name, colorId) {
-    const newCategory = { id: this.categories.value.length, name, colorId};
+    const newCategory = { id: this.categories.value.length, name, colorId, checked: false};
     this.categories.next([...this.categories.value, newCategory]);
   }
 
@@ -72,33 +75,41 @@ export class CoursesService {
     return this.categories;
   }
 
-  toggleFilterCategories(adding, id) {
-    if (adding) {
-      this.categoriesFilter = [...this.categoriesFilter, id];
-    } else {
-      const modifiedArrayCategories = this.categoriesFilter;
-      modifiedArrayCategories.splice(this.categoriesFilter.indexOf(id), 1);
+  toggleFilter(id) {
+    const modifiedCategories = this.categories.value;
+    modifiedCategories[id].checked = !modifiedCategories[id].checked;
+    this.categories.next(modifiedCategories);
 
-      this.categoriesFilter = [...modifiedArrayCategories];
+    let hasFilter = false;
+    this.categories.value.forEach(element => {
+      hasFilter = !hasFilter ? element.checked : hasFilter;
+    });
+
+    if (this.activeContent.value === 'browse-courses') {
+      let modifiedArrayCourses = this.courses;
+
+      if (hasFilter) {
+        modifiedArrayCourses = this.courses.filter(course => this.categories.value[course.categoryId].checked);
+      }
+
+      this.filteredCourses.next([...modifiedArrayCourses]);
     }
 
-    let modifiedArrayCourses = [];
-    if (this.categoriesFilter.length === 0) {
-      modifiedArrayCourses = this.courses;
-    } else {
-      modifiedArrayCourses = this.courses.filter(course => this.categoriesFilter.indexOf(course.categoryId) !== -1);
+    if (this.activeContent.value === 'my-courses') {
+      let modifiedArrayUserCourses = this.userCourses.value;
+
+      if (hasFilter) {
+        modifiedArrayUserCourses = this.userCourses.value.filter(course => this.categories.value[course.categoryId].checked);
+      }
+
+      this.filteredUserCourses.next([...modifiedArrayUserCourses]);
     }
+  }
 
-    this.filteredCourses.next([...modifiedArrayCourses]);
-
-    let modifiedArrayUserCourses = [];
-    if (this.categoriesFilter.length === 0) {
-      modifiedArrayUserCourses = this.userCourses.value;
-    } else {
-      modifiedArrayUserCourses = this.userCourses.value.filter(course => this.categoriesFilter.indexOf(course.categoryId) !== -1);
-    }
-
-    this.filteredUserCourses.next([...modifiedArrayUserCourses]);
+  resetFilters() {
+    const modifiedCategories = this.categories.value;
+    modifiedCategories.map(element => element.checked = false);
+    this.categories.next(modifiedCategories);
   }
 
   // toggleCategoryFavourite(category) {
@@ -174,7 +185,7 @@ export class CoursesService {
   }
 
   getCategoryById(id) {
-    return this.categories.value.find(element => element.id === id).name;
+    return this.categories.value.find((element, index) => index === id).name;
   }
 
   getCategoryColorById(id) {

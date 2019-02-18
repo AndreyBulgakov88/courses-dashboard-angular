@@ -13,6 +13,7 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserCoursesListComponent } from './account/user-courses-list/user-courses-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { UserCoursesListComponent } from './account/user-courses-list/user-cours
     AppRoutingModule,
     NgbModule,
     AngularFontAwesomeModule,
-    FilterPipeModule
+    FilterPipeModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

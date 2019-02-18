@@ -33,6 +33,7 @@ export class NavigationPanelComponent implements OnInit {
   activeContent = null;
   isAuthenticated = false;
   isAdmin = false;
+  categories = [];
 
   private addInputElRef: ElementRef;
   @ViewChild('addInput') set addInput(elRef: ElementRef) {
@@ -49,21 +50,27 @@ export class NavigationPanelComponent implements OnInit {
         this.isAuthenticated = currentUser === null ? false : true;
         this.isAdmin = currentUser === null ? false : currentUser.role === 'admin';
       });
+
+    this.coursesService.fetchCategories()
+    .subscribe(
+      categories => {
+        this.categories = categories;
+      });
   }
 
   // onClickFavourite(category) {
   //   this.coursesService.toggleCategoryFavourite(category);
   // }
 
-  onChangeFilterCategory(e, id) {
-    this.coursesService.toggleFilterCategories(e.target.checked, id);
+  onChangeFilter(id) {
+    this.coursesService.toggleFilter(id);
   }
 
  toggleAddCategory() {
     this.addingCategory = !this.addingCategory;
 
     if (this.addingCategory) {
-      setTimeout(() => { this.addInputElRef.nativeElement.focus(); });
+      setTimeout(() => this.addInputElRef.nativeElement.focus());
     }
   }
 
